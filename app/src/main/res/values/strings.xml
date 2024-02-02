@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">File Sharing Application</string>
+    <string name="tabitem_home">Home</string>
+    <string name="tabitem_send_file">Send File</string>
+    <string name="tabitem_recieve_file">Recieve File</string>
+    <string name="tabitem_profile">Profile</string>
+    <string name="discover_as_name">Discover as name</string>
+    <string name="new_user">new_user</string>
+    <string name="connection_secret">Connection Secret</string>
+    <string name="_112233">112233</string>
+    <string name="save">Save</string>
+    <string name="microproject_at_adypsoe_poly">Microproject at Adypsoe(poly)</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="text_continue">Continue</string>
+    <string name="no_files_selected">No Files Selected</string>
+    <string name="add_files_button">add files</string>
+    <string name="searching_for_devices">Searching for Devices</string>
+    <string name="make_sure_other_device_has_initiated_application">Make sure other device has initiated application</string>
+    <string name="devices_found">Devices Found</string>
+    <string name="choose_device_to_connect">Choose Device to connect</string>
+    <string name="make_sure_to_send_request_from_another_device">Make sure to send request from another device</string>
+</resources>
