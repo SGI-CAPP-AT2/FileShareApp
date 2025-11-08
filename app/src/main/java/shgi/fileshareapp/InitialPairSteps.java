@@ -28,6 +28,9 @@ public class InitialPairSteps extends PersistentBottomSheetDialogFragment {
     }
 
     public void renderDevices(WifiP2pDeviceList dvl){
+        // guard: fragment/dialog might not be attached when this is called
+        if (getDialog() == null || getActivity() == null) return;
+
         this.getDialog().findViewById(R.id.steps_pair_1).setVisibility(View.GONE);
         RadioGroup dev_grp = this.getDialog().findViewById(R.id.found_devices);
         dev_grp.removeAllViews();
@@ -38,32 +41,37 @@ public class InitialPairSteps extends PersistentBottomSheetDialogFragment {
         }
         this.getDialog().findViewById(R.id.steps_pair_2).setVisibility(View.VISIBLE);
         Button contn_btn = this.getDialog().findViewById(R.id.btn_to_contn_pairing);
-        contn_btn.setOnClickListener((View v)->{
-            RadioGroup group = this.getDialog().findViewById(R.id.found_devices);
-            DeviceRadioButton checked_dv = this.getDialog().findViewById(group.getCheckedRadioButtonId());
-            if(checked_dv!=null) {
-                WifiP2pDevice dv = checked_dv.getDevice();
-                ((MainActivity) getActivity()).connectToDevice(dv);
-            }
-        });
+        if (contn_btn != null) {
+            contn_btn.setOnClickListener((View v)->{
+                if (getDialog() == null) return; // dialog might be gone while handling click
+                RadioGroup group = this.getDialog().findViewById(R.id.found_devices);
+                DeviceRadioButton checked_dv = this.getDialog().findViewById(group.getCheckedRadioButtonId());
+                if(checked_dv!=null && getActivity() != null) {
+                    WifiP2pDevice dv = checked_dv.getDevice();
+                    ((MainActivity) getActivity()).connectToDevice(dv);
+                }
+            });
+        }
     }
     public void showTcpEstablishment(){
+        if (getDialog() == null) return;
         ConstraintLayout null_waiting = (ConstraintLayout) this.getDialog().findViewById(R.id.null_waiting_dialog);
-        null_waiting.setVisibility(View.GONE);
+        if (null_waiting != null) null_waiting.setVisibility(View.GONE);
         LinearLayout ll_pair_steps = (LinearLayout) this.getDialog().findViewById(R.id.p2p_steps);
-        ll_pair_steps.setVisibility(View.GONE);
+        if (ll_pair_steps != null) ll_pair_steps.setVisibility(View.GONE);
         LinearLayout ll_tcp_steps = (LinearLayout) this.getDialog().findViewById(R.id.tcp_setup);
-        ll_tcp_steps.setVisibility(View.VISIBLE);
+        if (ll_tcp_steps != null) ll_tcp_steps.setVisibility(View.VISIBLE);
     }
     public void showNullWaiting(){
+        if (getDialog() == null) return;
         LinearLayout ll_pair_steps = (LinearLayout) this.getDialog().findViewById(R.id.p2p_steps);
-        ll_pair_steps.setVisibility(View.GONE);
+        if (ll_pair_steps != null) ll_pair_steps.setVisibility(View.GONE);
         LinearLayout ll_tcp_steps = (LinearLayout) this.getDialog().findViewById(R.id.tcp_setup);
-        ll_tcp_steps.setVisibility(View.GONE);
+        if (ll_tcp_steps != null) ll_tcp_steps.setVisibility(View.GONE);
         ConstraintLayout null_waiting = (ConstraintLayout) this.getDialog().findViewById(R.id.null_waiting_dialog);
-        null_waiting.setVisibility(View.VISIBLE);
+        if (null_waiting != null) null_waiting.setVisibility(View.VISIBLE);
     }
     public void dismiss(){
-        this.getDialog().dismiss();
+        if (this.getDialog() != null) this.getDialog().dismiss();
     }
 }

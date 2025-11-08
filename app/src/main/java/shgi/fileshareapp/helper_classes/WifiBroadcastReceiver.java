@@ -46,9 +46,12 @@ public class WifiBroadcastReceiver extends BroadcastReceiver {
                 manager.requestPeers(channel, myPeerListListener);
             }
         } else if (WifiP2pManager.WIFI_P2P_CONNECTION_CHANGED_ACTION.equals(action)) {
-            activity.getDiscoveryFragment().showNullWaiting();
+            // Make sure discovery fragment/dialog is present before calling UI methods
+            if (activity.getDiscoveryFragment() != null && activity.getDiscoveryFragment().getDialog() != null) {
+                activity.getDiscoveryFragment().showNullWaiting();
+            }
             NetworkInfo networkInfo = (NetworkInfo) intent.getParcelableExtra(WifiP2pManager.EXTRA_NETWORK_INFO);
-            if(networkInfo.isConnected()){
+            if(networkInfo != null && networkInfo.isConnected()){
                 activity.startTCP();
             }
         } else if (WifiP2pManager.WIFI_P2P_THIS_DEVICE_CHANGED_ACTION.equals(action)) {

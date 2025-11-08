@@ -299,7 +299,9 @@ public class MainActivity extends AppCompatActivity {
                         startThreads(client.getInputStream(), client.getOutputStream());
                         showMessage("Started Threads");
                     } catch (IOException e) {
-                        throw new RuntimeException(e);
+                        // avoid crashing the whole app due to network IO errors on background thread
+                        showMessage("IOException in server socket: " + e.toString());
+                        return;
                     }
                 });
                 networkThread.start();
@@ -312,7 +314,9 @@ public class MainActivity extends AppCompatActivity {
                         startThreads(client.getInputStream(), client.getOutputStream());
                         showMessage("Started Threads");
                     } catch (IOException e) {
-                        throw new RuntimeException(e);
+                        // avoid crashing the whole app due to network IO errors on background thread
+                        showMessage("IOException in client socket: " + e.toString());
+                        return;
                     }
                 });
                 networkThread.start();
